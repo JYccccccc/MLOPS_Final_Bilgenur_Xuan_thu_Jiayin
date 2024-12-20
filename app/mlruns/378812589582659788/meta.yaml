@@ -1,0 +1,6 @@
+artifact_location: file:///D:/Code/exeserce/mldevops/MLOPS_Final_Bilgenur_Xuan_thu_Jiayin/app/mlruns/378812589582659788
+creation_time: 1734646582361
+experiment_id: '378812589582659788'
+last_update_time: 1734646582361
+lifecycle_stage: active
+name: mnist-experiment

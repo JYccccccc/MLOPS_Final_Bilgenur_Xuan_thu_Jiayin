@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Code/exeserce/mldevops/MLOPS_Final_Bilgenur_Xuan_thu_Jiayin/app/mlruns/378812589582659788/00bd6f7d7e2d4dad8cf285ef63ba1a40/artifacts
+end_time: 1734646657097
+entry_point_name: ''
+experiment_id: '378812589582659788'
+lifecycle_stage: active
+run_id: 00bd6f7d7e2d4dad8cf285ef63ba1a40
+run_name: valuable-bat-437
+run_uuid: 00bd6f7d7e2d4dad8cf285ef63ba1a40
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734646582808
+status: 3
+tags: []
+user_id: aabbd

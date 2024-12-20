@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  mlflow:
+    image: mlflow/mlflow:latest
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlflow/mlruns
+    networks:
+      - mlflow-network
+
+  tensorflow:
+    build: .
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    volumes:
+      - .:/app
+    networks:
+      - mlflow-network
+    command: python /app/train.py
+
+networks:
+  mlflow-network:
+    driver: bridge
