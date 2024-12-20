@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Code/exeserce/mldevops/MLOPS_Final_Bilgenur_Xuan_thu_Jiayin/mlruns/792707328836363499/469c923e59274bc688229559d936f753/artifacts
+end_time: 1734735165851
+entry_point_name: ''
+experiment_id: '792707328836363499'
+lifecycle_stage: active
+run_id: 469c923e59274bc688229559d936f753
+run_name: blushing-fowl-134
+run_uuid: 469c923e59274bc688229559d936f753
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734735100248
+status: 3
+tags: []
+user_id: aabbd

@@ -8,23 +8,182 @@ from tensorflow import keras
 import numpy as np
 from flask import Flask, request, jsonify
 import threading
+from prometheus_client import Counter, Histogram, generate_latest
+from time import time
+import os
+from train import train_model, get_training_logs
+
+current_model = None
+model_metadata = {
+    "model_name": "modelMnist1",
+    "version": "v1.0",
+    "accuracy": None,
+    "loss": None,
+    "training_params": {}
+}
+training_logs = []
 
 # Definie Flask
 app = Flask(__name__)
+
+def track_metrics(endpoint):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            start_time = time()
+            REQUEST_COUNT.labels(method=request.method, endpoint=endpoint).inc()
+            response = func(*args, **kwargs)
+            duration = time() - start_time
+            REQUEST_DURATION.labels(endpoint=endpoint).observe(duration)
+            return response
+        return wrapper
+    return decorator
 
 # Flask API routier, pour charger le modele
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
         data = request.json
+        if 'image' not in data:
+            return jsonify({"error": "Invalid input", "message": "Image data is required."}), 400
+        
         image_array = np.array(data['image']).reshape(1, 28, 28, 1)
-        image_array = image_array / 255.0  # normalisation
+        image_array = image_array / 255.0  # normalization
         model = keras.models.load_model('save/modelMnist1.keras')
         prediction = model.predict(image_array)
-        output = np.argmax(prediction, axis=1)
-        return jsonify({"prediction": int(output[0])})
+        probabilities = prediction.tolist()[0]
+        output = np.argmax(probabilities)
+        return jsonify({
+            "prediction": int(output),
+            "probabilities": probabilities
+        })
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({"error": "Prediction error", "message": str(e)}), 500
+
+# Metrics
+REQUEST_COUNT = Counter('api_requests_total', 'Total API requests', ['method', 'endpoint'])
+REQUEST_DURATION = Histogram('api_request_duration_seconds', 'API request duration', ['endpoint'])
+
+@app.route('/metrics', methods=['GET'])
+def metrics():
+    return generate_latest(), 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+@app.route('/health', methods=['GET'])
+def health():
+    try:
+        
+        api_status = "Healthy"
+
+        
+        try:
+            database_status = "Connected"
+        except Exception as e:
+            database_status = f"Error: {str(e)}"
+
+        other_services_status = {
+            "MLFlow": "Healthy"  
+        }
+
+        response = {
+            "status": "Healthy" if database_status == "Connected" and all(
+                status == "Healthy" for status in other_services_status.values()) else "Unhealthy",
+            "details": {
+                "api_status": api_status,
+                "database_status": database_status,
+                "other_services_status": other_services_status,
+            }
+        }
+        return jsonify(response), 200 if response["status"] == "Healthy" else 503
+
+    except Exception as e:
+        response = {
+            "status": "Unhealthy",
+            "details": {
+                "error": str(e)
+            }
+        }
+        return jsonify(response), 500
+
+@app.route('/model/info', methods=['GET'])
+def get_model_info():
+    return jsonify(model_metadata)
+
+@app.route('/train', methods=['POST'])
+def train():
+    global current_model, model_metadata, training_logs
+    data = request.get_json()
+    batch_size = data.get('batch_size', 32)
+    epochs = data.get('epochs', 10)
+    optimizer = data.get('optimizer', 'adam')
+
+    # training
+    model, history, logs = train_model(batch_size=batch_size, epochs=epochs, optimizer=optimizer)
+    
+    #mis a jour les infos de modele
+    current_model = model
+    model_metadata["accuracy"] = history['accuracy'][-1]
+    model_metadata["loss"] = history['loss'][-1]
+    model_metadata["training_params"] = {
+        "batch_size": batch_size,
+        "epochs": epochs,
+        "optimizer": optimizer
+    }
+    training_logs = logs
+
+    return jsonify({
+        "status": "Entraînement démarré",
+        "message": f"L'entraînement a démarré avec batch_size={batch_size}, epochs={epochs}, optimizer='{optimizer}'."
+    })
+
+@app.route('/logs', methods=['GET'])
+def get_logs():
+    """retouner trainning logs"""
+    return jsonify({"logs": training_logs})
+
+@app.route('/user', methods=['GET', 'POST'])
+def manage_user():
+    """gerer information d'utilisateur"""
+    if request.method == 'GET':
+        user_info = {
+            "user_id": "12345",
+            "username": "john_doe",
+            "role": "admin",
+            "last_login": "2024-12-20T10:00:00Z"
+        }
+        return jsonify(user_info)
+    elif request.method == 'POST':
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        role = data.get('role', 'user')
+
+        if not username or not password:
+            return jsonify({
+                "error": "BadRequest",
+                "message": "Nom d'utilisateur et mot de passe sont obligatoires."
+            }), 400
+
+        return jsonify({
+            "status": "Utilisateur créé",
+            "message": f"L'utilisateur '{username}' a été créé avec succès."
+        })
+
+
+@app.route('/model/deploy', methods=['POST'])
+def deploy_model():
+    """environement de producter"""
+    global current_model
+    if not current_model:
+        return jsonify({
+            "error": "NoModel",
+            "message": "Aucun modèle n'est disponible pour le déploiement."
+        }), 400
+
+    version = "v2.0"
+    model_metadata["version"] = version
+    return jsonify({
+        "status": "Déploiement réussi",
+        "message": f"Le modèle version {version} a été déployé avec succès."
+    })
 
 # PaintBoard
 class PaintBoard(QGraphicsView):
@@ -145,9 +304,9 @@ if __name__ == "__main__":
     flask_thread.setDaemon(True)
     flask_thread.start()
 
-    import sys
-    from PyQt5.QtWidgets import QApplication
-    app = QApplication(sys.argv)
-    mainWindow = MainWidget()
-    mainWindow.show()
-    sys.exit(app.exec_())
+    #import sys
+    #from PyQt5.QtWidgets import QApplication
+    #app = QApplication(sys.argv)
+    #mainWindow = MainWidget()
+    #mainWindow.show()
+    #sys.exit(app.exec_())

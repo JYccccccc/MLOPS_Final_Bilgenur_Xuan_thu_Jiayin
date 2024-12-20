@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Code/exeserce/mldevops/MLOPS_Final_Bilgenur_Xuan_thu_Jiayin/mlruns/792707328836363499/6680654506ae4d33b70ecdf2eedb67f2/artifacts
+end_time: 1734734850133
+entry_point_name: ''
+experiment_id: '792707328836363499'
+lifecycle_stage: active
+run_id: 6680654506ae4d33b70ecdf2eedb67f2
+run_name: sassy-tern-15
+run_uuid: 6680654506ae4d33b70ecdf2eedb67f2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734734778179
+status: 3
+tags: []
+user_id: aabbd

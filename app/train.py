@@ -10,6 +10,44 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPool2D, Input
 from keras.utils import to_categorical
 
+def train_model(batch_size=32, epochs=10, optimizer='adam'):
+    global training_logs
+    training_logs = []
+    
+    with mlflow.start_run():
+        # creer modele
+        model = Sequential()
+        model.add(Input(shape=(28, 28, 1)))
+        model.add(Conv2D(filters=16, kernel_size=(5, 5), padding='same', activation='relu'))
+        model.add(MaxPool2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
+        model.add(Flatten())
+        model.add(Dense(128, activation='relu'))
+        model.add(Dropout(0.25))
+        model.add(Dense(10, activation='softmax'))
+        model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+
+        # trainning
+        train_history = model.fit(
+            x=X_train4D_Normalize,
+            y=y_trainOnehot,
+            validation_split=0.2,
+            batch_size=batch_size,
+            epochs=epochs,
+            verbose=2
+        )
+
+        # log
+        for epoch, (loss, acc) in enumerate(zip(train_history.history['loss'], train_history.history['accuracy']), 1):
+            training_logs.append(f"Epoch {epoch}/{epochs} - Loss: {loss:.4f}, Accuracy: {acc:.4f}")
+
+        return model, train_history.history, training_logs
+
+
+def get_training_logs():
+    """avoir logs"""
+    return training_logs
+
 # set mlflow
 mlflow.set_experiment('mnist-experiment')
 

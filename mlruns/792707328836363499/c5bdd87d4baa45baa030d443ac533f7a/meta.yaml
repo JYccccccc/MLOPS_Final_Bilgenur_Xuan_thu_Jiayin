@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Code/exeserce/mldevops/MLOPS_Final_Bilgenur_Xuan_thu_Jiayin/mlruns/792707328836363499/c5bdd87d4baa45baa030d443ac533f7a/artifacts
+end_time: 1734735046104
+entry_point_name: ''
+experiment_id: '792707328836363499'
+lifecycle_stage: active
+run_id: c5bdd87d4baa45baa030d443ac533f7a
+run_name: nebulous-goat-359
+run_uuid: c5bdd87d4baa45baa030d443ac533f7a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1734734980048
+status: 3
+tags: []
+user_id: aabbd
