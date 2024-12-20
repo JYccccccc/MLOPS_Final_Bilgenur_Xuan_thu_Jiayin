@@ -63,7 +63,7 @@ Les workflows GitHub Actions automatisent les processus suivants :
 * ***Prometheus*** est configuré pour collecter des métriques comme les requêtes API, les erreurs, la latence, l'utilisation des ressources, etc.
 * ***Grafana*** est utilisé pour créer des tableaux de bord interactifs permettant de visualiser ces métriques en temps réel.
 ## <span id="jump3">Présentation projet ML</span>
-Pour plus de détails sur l'API de prédiction, veuillez consulter le ficher [Mnist.ipynb](./Mnist.ipynb).
+Pour plus de détails sur le Projet ML Mnist, veuillez consulter le ficher [Mnist.ipynb](./Mnist.ipynb).
 ## <span id="jump4">Installation</span>
 ### Cloner le repository
 ```bash
