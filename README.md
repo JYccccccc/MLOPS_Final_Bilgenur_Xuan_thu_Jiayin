@@ -9,15 +9,16 @@ Ce projet met en place un pipeline MLOps complet intégrant des pratiques DevOps
 ## Table des matières
 1. [Prérequis](#jump1)
 2. [Architecture du projet](#jump2)
-3. [Installation](#jump3)
-4. [Utilisation](#jump4)
-5. [API Documentation](#jump5)
-6. [CI/CD avec GitHub Actions](#jump6)
-7. [Surveillance avec Prometheus et Grafana](#jump7)
-8. [Gestion des erreurs](#jump8)
-9. [Sécurité](#jump9)
-10. [Contribution](#jump10)
-11. [Licence](#jump11)
+3. [Présentation projet ML](#jump3)
+4. [Installation](#jump4)
+5. [Utilisation](#jump5)
+6. [API Documentation](#jump6)
+7. [CI/CD avec GitHub Actions](#jump7)
+8. [Surveillance avec Prometheus et Grafana](#jump8)
+9. [Gestion des erreurs](#jump9)
+10. [Sécurité](#jump10)
+11. [Contribution](#jump11)
+12. [Licence](#jump12)
 
 ## <span id="jump1">Prérequis</span>
 Avant de démarrer avec ce projet, vous devez vous assurer que les éléments suivants sont installés sur votre machine ou dans votre environnement cloud :
@@ -61,8 +62,9 @@ Les workflows GitHub Actions automatisent les processus suivants :
 ### 4. ***Surveillance avec Prometheus et Grafana*** :
 * ***Prometheus*** est configuré pour collecter des métriques comme les requêtes API, les erreurs, la latence, l'utilisation des ressources, etc.
 * ***Grafana*** est utilisé pour créer des tableaux de bord interactifs permettant de visualiser ces métriques en temps réel.
-
-## <span id="jump3">Installation</span>
+## <span id="jump3">Présentation projet ML</span>
+Pour plus de détails sur l'API de prédiction, veuillez consulter le ficher [Mnist.ipynb](./Mnist.ipynb).
+## <span id="jump4">Installation</span>
 ### Cloner le repository
 ```bash
 git clone https://github.com/JYccccccc/MLOPS_Final_Bilgenur_Xuan_thu_Jiayin.git
@@ -101,7 +103,7 @@ docker-compose up --build
 ```
 Cela va démarrer les services définis dans votre fichier ```docker-compose.yml```.
 
-## <span id="jump4">Utilisation</span>
+## <span id="jump5">Utilisation</span>
 ### Lancer l'API de prédiction
 Une fois le service déployé, vous pouvez tester l'API de prédiction en envoyant une image via une requête ```POST``` à l'endpoint ```/predict```.
 
@@ -114,10 +116,10 @@ curl -X POST "http://localhost:5000/predict" -H "Content-Type: application/json"
 ### Accéder à MLflow
 Le serveur MLflow est accessible à l'adresse suivante : ```http://localhost:5001```. Vous pouvez y consulter les expériences et les modèles.
 
-## <span id="jump5">Documentation de l'API</span>
+## <span id="jump6">Documentation de l'API</span>
 Pour plus de détails sur l'API de prédiction, veuillez consulter l'[API Documentation](./API_Documentation.md).
 
-## <span id="jump6">CI/CD avec GitHub Actions</span>
+## <span id="jump7">CI/CD avec GitHub Actions</span>
 Le projet utilise des ***workflows GitHub Actions*** pour automatiser le processus de développement et de déploiement.
 
 ### Structure des workflows
@@ -163,7 +165,7 @@ jobs:
       run: |
         docker build -t ml-api .
 ```
-## <span id="jump7">Surveillance avec Prometheus et Grafana</span>
+## <span id="jump8">Surveillance avec Prometheus et Grafana</span>
 ### Prometheus
 Prometheus est utilisé pour collecter des métriques depuis l'API, le serveur MLflow, et les autres services.
 
@@ -172,17 +174,17 @@ Grafana est configuré pour afficher ces métriques dans des tableaux de bord in
 
 Accédez à Grafana via ```http://localhost:3000```.
 Utilisez le tableau de bord par défaut pour surveiller les métriques.
-## <span id="jump8">Gestion des erreurs</span>
+## <span id="jump9">Gestion des erreurs</span>
 L'API et les services sont conçus pour gérer les erreurs de manière robuste. En cas d'erreur, une réponse détaillée est renvoyée, comprenant un message d'erreur et un code d'état HTTP.
 
-## <span id="jump9">Sécurité</span>
+## <span id="jump10">Sécurité</span>
 ### Authentification
 L'API utilise ***JWT (JSON Web Tokens)*** pour l'authentification et la gestion des utilisateurs.
 
 ### Sécurisation des Secrets
 Les secrets et clés sont gérés via ***AWS Secrets Manager*** ou un service équivalent sur GCP.
 
-## <span id="jump10">Contribution</span>
+## <span id="jump11">Contribution</span>
 Nous accueillons les contributions de la communauté ! Pour contribuer :
 
 1. Fork ce repository.
@@ -190,5 +192,5 @@ Nous accueillons les contributions de la communauté ! Pour contribuer :
 3. Commit tes changements (```git commit -am 'Ajoute une nouvelle fonctionnalité'```).
 4. Push à ta branche (```git push origin feature/ma-nouvelle-fonctionnalité```).
 5. Ouvre une Pull Request.
-## <span id="jump11">Licence</span>
+## <span id="jump12">Licence</span>
 Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
