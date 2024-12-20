@@ -1,6 +1,8 @@
-from PyQt5.Qt import QWidget, QColor, QPixmap, QIcon, QSize, QCheckBox
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QPushButton, QSplitter, QComboBox, QLabel, QSpinBox, QFileDialog, QGraphicsView, QGraphicsScene, QGraphicsPixmapItem
-from PyQt5.QtGui import QPainter, QPen, QImage, QMouseEvent
+from PyQt5.QtWidgets import (
+    QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QSplitter, QComboBox,
+    QLabel, QSpinBox, QFileDialog, QGraphicsView, QGraphicsScene, QGraphicsPixmapItem, QCheckBox
+)
+from PyQt5.QtGui import QPainter, QPen, QImage
 from PyQt5.QtCore import Qt, QPoint
 from tensorflow import keras
 import numpy as np
