@@ -4,11 +4,16 @@ import numpy as np
 import time
 import mlflow
 import mlflow.keras
+import os
 
 from tensorflow import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPool2D, Input
 from keras.utils import to_categorical
+
+tracking_dir = os.path.join(os.getcwd(), 'mlruns')
+mlflow.set_tracking_uri(f"file://{tracking_dir}")
+mlflow.set_experiment('mnist-experiment')
 
 def train_model(batch_size=32, epochs=10, optimizer='adam'):
     global training_logs
