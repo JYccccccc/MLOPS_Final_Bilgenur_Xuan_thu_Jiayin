@@ -11,7 +11,10 @@ import threading
 from prometheus_client import Counter, Histogram, generate_latest
 from time import time
 import os
-from train import train_model, get_training_logs
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+from app.train import train_model
+#from train import train_model, get_training_logs
 
 current_model = None
 model_metadata = {

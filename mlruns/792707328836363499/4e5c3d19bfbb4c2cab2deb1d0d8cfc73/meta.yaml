@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Code/exeserce/mldevops/MLOPS_Final_Bilgenur_Xuan_thu_Jiayin/mlruns/792707328836363499/4e5c3d19bfbb4c2cab2deb1d0d8cfc73/artifacts
+end_time: 1735055696196
+entry_point_name: ''
+experiment_id: '792707328836363499'
+lifecycle_stage: active
+run_id: 4e5c3d19bfbb4c2cab2deb1d0d8cfc73
+run_name: unequaled-bass-633
+run_uuid: 4e5c3d19bfbb4c2cab2deb1d0d8cfc73
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1735055585754
+status: 3
+tags: []
+user_id: aabbd

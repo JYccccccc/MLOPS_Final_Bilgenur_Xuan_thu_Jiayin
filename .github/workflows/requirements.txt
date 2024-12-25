@@ -1,0 +1,11 @@
+flask
+numpy
+scikit-learn
+mlflow
+tensorflow
+matplotlib
+PyQt5
+PyQt5-sip
+PyQt5-stubs
+prometheus_client
+pytest
