@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/Code/exeserce/mldevops/MLOPS_Final_Bilgenur_Xuan_thu_Jiayin/mlruns/792707328836363499/e418f6ae2fd74cb99ecdae5a15b3df82/artifacts
+end_time: 1735228717909
+entry_point_name: ''
+experiment_id: '792707328836363499'
+lifecycle_stage: active
+run_id: e418f6ae2fd74cb99ecdae5a15b3df82
+run_name: awesome-skunk-134
+run_uuid: e418f6ae2fd74cb99ecdae5a15b3df82
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1735228700343
+status: 4
+tags: []
+user_id: aabbd

@@ -22,15 +22,22 @@ jobs:
         python-version: 3.10.16
 
     - name: Create mlruns directory
-      run: mkdir -p ./mlruns
+      run: |
+        mkdir -p ./mlruns
+        chmod -R 777 ./mlruns
+        ls -ld ./mlruns
 
     - name: Install dependencies
       run: |
         pip install -r app/requirements.txt
 
-    - name: Run tests
+    - name: Debug environment variables
       run: |
         echo "MLFLOW_TRACKING_URI=${{ env.MLFLOW_TRACKING_URI }}"
+
+    - name: Run tests
+      run: |
+        export TF_CPP_MIN_LOG_LEVEL=2
         pytest app/test/
 
     - name: Build Docker image
