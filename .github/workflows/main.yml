@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  MLFLOW_TRACKING_URI: "file:./mlruns"
+
 jobs:
   build:
     runs-on: ubuntu-latest
